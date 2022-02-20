@@ -17,7 +17,7 @@ namespace eWolfCloneAndPack.Clone
 
         public ProjectType ProjectType { get; set; }
 
-        private string Destination
+        internal string Destination
         {
             get
             {
@@ -25,7 +25,7 @@ namespace eWolfCloneAndPack.Clone
             }
         }
 
-        private string From
+        internal string From
         {
             get
             {
@@ -35,7 +35,6 @@ namespace eWolfCloneAndPack.Clone
 
         internal void Clone()
         {
-            string[] files = Directory.GetFiles(From, "", SearchOption.AllDirectories);
             Console.WriteLine($"=============================================");
             Console.WriteLine($"Starting Cloning {From} to {Destination}");
 
@@ -44,8 +43,10 @@ namespace eWolfCloneAndPack.Clone
             Directory.CreateDirectory(Destination);
 
             SynchronizeFolders.Do(From, Destination, projectTypeUnity3D);
-
-            Console.WriteLine($"Finished {From} to {Destination}");
+            Console.WriteLine($"Finished Cloning {From} to {Destination}");
+            
+            ZipHelper.CreateZip(this);
+            ZipHelper.RemoveZipDups(this);
         }
 
         internal void GetDrives()

@@ -8,5 +8,5 @@ var cf = new CloneFolder(@"C:\Unity3d", "Sci-Fi_Rooms_Pack1_eWolf", ProjectType.
 
 cf.Clone();
 
-var cf2 = new CloneFolder(@"C:\Unity3d", "SpaceSalvager", ProjectType.Unity3D);
-cf2.Clone();
+//var cf2 = new CloneFolder(@"C:\Unity3d", "SpaceSalvager", ProjectType.Unity3D);
+//cf2.Clone();

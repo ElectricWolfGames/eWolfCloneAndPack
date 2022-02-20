@@ -39,10 +39,6 @@
                     {
                         File.Copy(file, dest, true);
                     }
-                    else
-                    {
-                        Console.Write("-");
-                    }
                 }
             }
             RemoveFromBackUp(from, to);
