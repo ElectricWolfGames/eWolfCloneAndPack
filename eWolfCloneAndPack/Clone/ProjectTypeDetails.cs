@@ -13,6 +13,7 @@
             _excludedFolders.Add(@"\bin\Debug\");
             _excludedFolders.Add(@"\obj\");
             _excludedFolders.Add(@"\.vs\");
+            _excludedFolders.Add(@"\.svn\");
         }
 
         public List<string> GetExcludedFolders

@@ -42,11 +42,14 @@ namespace eWolfCloneAndPack.Clone
 
             Directory.CreateDirectory(Destination);
 
-            SynchronizeFolders.Do(From, Destination, projectTypeUnity3D);
+            bool updated = SynchronizeFolders.Do(From, Destination, projectTypeUnity3D);
             Console.WriteLine($"Finished Cloning {From} to {Destination}");
-            
-            ZipHelper.CreateZip(this);
-            ZipHelper.RemoveZipDups(this);
+
+            if (updated)
+            {
+                ZipHelper.CreateZip(this);
+                ZipHelper.RemoveZipDups(this);
+            }
         }
 
         internal void GetDrives()

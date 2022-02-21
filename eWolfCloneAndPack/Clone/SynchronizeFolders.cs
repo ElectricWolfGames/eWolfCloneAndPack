@@ -2,9 +2,19 @@
 {
     internal static class SynchronizeFolders
     {
-        public static void Do(string from, string to, IProjectTypeDetails projectTypeDetails)
+        public static bool Do(string from, string to, IProjectTypeDetails projectTypeDetails)
         {
-            string[] files = Directory.GetFiles(from, "", SearchOption.AllDirectories);
+            bool updated = false;
+            string[] files;
+            try
+            {
+                files = Directory.GetFiles(from, "", SearchOption.AllDirectories);
+            }
+            catch
+            {
+                return updated;
+            }
+
             List<string> excludedFolders = projectTypeDetails.GetExcludedFolders;
 
             foreach (var file in files)
@@ -29,6 +39,7 @@
                     Directory.CreateDirectory(Path.GetDirectoryName(dest));
                     File.Copy(file, dest);
                     Console.Write("+");
+                    updated = true;
                 }
                 else
                 {
@@ -38,10 +49,13 @@
                     if (fileDetailsFrom.Ticks > fileDetailsTo.Ticks)
                     {
                         File.Copy(file, dest, true);
+                        Console.Write("+");
+                        updated = true;
                     }
                 }
             }
             RemoveFromBackUp(from, to);
+            return updated;
         }
 
         public static void RemoveFromBackUp(string from, string to)
