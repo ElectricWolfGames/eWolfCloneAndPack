@@ -6,6 +6,22 @@ namespace eWolfCloneAndPack
 {
     internal static class ZipHelper
     {
+        internal static void CopyZips(CloneFolder cloneFolderDetails, string driveLetter)
+        {
+            DateTime dt = DateTime.Now;
+            string zipPath = GetBaseFolder(cloneFolderDetails, dt);
+            string[] files = Directory.GetFiles(zipPath, $"*{cloneFolderDetails.Name}*", SearchOption.AllDirectories);
+            foreach (string fileName in files)
+            {
+                string dest = GetOtherDriveFolder(cloneFolderDetails, dt, driveLetter);
+                Directory.CreateDirectory(Path.GetDirectoryName(dest));
+
+                string name = Path.GetFileName(fileName);
+                if (!File.Exists(dest + name))
+                    File.Copy(fileName, dest + name);
+            }
+        }
+
         internal static void CreateZip(CloneFolder cloneFolderDetails)
         {
             DateTime dt = DateTime.Now;
@@ -24,12 +40,12 @@ namespace eWolfCloneAndPack
                     zipPath = @$"{GetBaseFolder(cloneFolderDetails, dt)}\{dt.Year}-{dt.Month.ToString("00")}-{dt.Day.ToString("00")}.{i} {cloneFolderDetails.Name}.zip";
                     if (!File.Exists(zipPath))
                     {
-                        ZipFile.CreateFromDirectory(cloneFolderDetails.From, zipPath);
+                        ZipFile.CreateFromDirectory(cloneFolderDetails.Destination, zipPath);
                         return;
                     }
                 }
                 File.Delete(zipPath);
-                ZipFile.CreateFromDirectory(cloneFolderDetails.From, zipPath);
+                ZipFile.CreateFromDirectory(cloneFolderDetails.Destination, zipPath);
             }
         }
 
@@ -68,6 +84,11 @@ namespace eWolfCloneAndPack
         private static string GetBaseFolder(CloneFolder cloneFolderDetails, DateTime dt)
         {
             return @$"{Settings.ZipStore}\{cloneFolderDetails.ProjectType}\{cloneFolderDetails.Name}\{dt.Year}\";
+        }
+
+        private static string GetOtherDriveFolder(CloneFolder cloneFolderDetails, DateTime dt, string driveLetter)
+        {
+            return @$"{driveLetter}\_BackUpZips\{cloneFolderDetails.ProjectType}\{cloneFolderDetails.Name}\{dt.Year}\";
         }
 
         private static void RemoveAllButLatest(List<string> files)

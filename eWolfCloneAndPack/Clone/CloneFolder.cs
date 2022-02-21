@@ -49,23 +49,8 @@ namespace eWolfCloneAndPack.Clone
             {
                 ZipHelper.CreateZip(this);
                 ZipHelper.RemoveZipDups(this);
+                DrivesHelper.CopyBackUps(this);
             }
-        }
-
-        internal void GetDrives()
-        {
-            DriveInfo[] drives = DriveInfo.GetDrives();
-            Console.WriteLine("Detected Drives: ");
-            for (int i = 0; i < drives.Length; i++)
-            {
-                try
-                {
-                    Console.WriteLine($"Drive {i} {drives[i].Name} {drives[i].VolumeLabel}");
-                }
-                catch { }
-            }
-
-            // return drives;
         }
     }
 }
