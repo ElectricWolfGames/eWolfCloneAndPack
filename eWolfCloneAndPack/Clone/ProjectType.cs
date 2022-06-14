@@ -4,5 +4,6 @@
     {
         Media,
         Unity3D,
+        VSProject,
     }
 }

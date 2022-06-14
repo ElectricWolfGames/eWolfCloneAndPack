@@ -15,6 +15,12 @@ namespace eWolfCloneAndPack.Clone
 
             cf = new CloneFolder(@"C:\Unity3d", "TrainMatch", ProjectType.Unity3D);
             cf.Clone();
+
+            cf = new CloneFolder(@"E:\Projects\GitHub\eWolfSiteBuilder\", "eWolfSiteBuilder", ProjectType.VSProject);
+            cf.Clone();
+
+            cf = new CloneFolder(@"E:\Projects\eWolfModelRailwayWeb\RailwayWebBuilder\", "RailwayWebBuilder", ProjectType.VSProject);
+            cf.Clone();
         }
     }
 }

@@ -4,7 +4,7 @@ namespace eWolfCloneAndPack
 {
     internal static class DrivesHelper
     {
-        private static List<string> _backUpDrives = new List<string>() { "RiskyStore" };
+        private static List<string> _backUpDrives = new List<string>() { "RiskyStore", "Master2" };
 
         internal static void CopyBackUps(CloneFolder cloneFolder)
         {
