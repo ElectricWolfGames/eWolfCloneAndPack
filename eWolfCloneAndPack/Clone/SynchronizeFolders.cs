@@ -4,6 +4,7 @@
     {
         public static bool Do(string from, string to, IProjectTypeDetails projectTypeDetails)
         {
+            Console.Write("[");
             bool updated = false;
             string[] files;
             try
@@ -37,7 +38,11 @@
                 if (!File.Exists(dest))
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(dest));
-                    File.Copy(file, dest);
+                    try
+                    {
+                        File.Copy(file, dest);
+                    }
+                    catch { }
                     Console.Write("+");
                     updated = true;
                 }
@@ -55,6 +60,7 @@
                 }
             }
             RemoveFromBackUp(from, to);
+            Console.Write("]");
             return updated;
         }
 

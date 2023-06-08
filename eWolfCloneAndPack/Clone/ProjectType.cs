@@ -5,5 +5,6 @@
         Media,
         Unity3D,
         VSProject,
+        RISKCOPYONLY
     }
 }
