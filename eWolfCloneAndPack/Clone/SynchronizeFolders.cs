@@ -5,6 +5,9 @@
         public static bool Do(string from, string to, IProjectTypeDetails projectTypeDetails)
         {
             Console.Write("[");
+
+            RemoveFromBackUp(from, to);
+
             bool updated = false;
             string[] files;
             try
@@ -59,9 +62,15 @@
                     }
                 }
             }
-            RemoveFromBackUp(from, to);
+            
             Console.Write("]");
+            RemoveEmptyFolders(to);
             return updated;
+        }
+
+        private static void RemoveEmptyFolders(string to)
+        {
+            // Can we remove any folder that is empty?
         }
 
         public static void RemoveFromBackUp(string from, string to)
@@ -73,6 +82,7 @@
                 string dest = from + partFile;
                 if (!File.Exists(dest))
                 {
+                    Console.Write("-");
                     File.Delete(file);
                 }
             }

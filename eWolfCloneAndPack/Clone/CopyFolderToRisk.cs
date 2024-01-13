@@ -1,4 +1,5 @@
 ﻿using eWolfCloneAndPack.Configuration;
+using eWolfCloneAndPack.Helpers;
 
 namespace eWolfCloneAndPack.Clone
 {
@@ -22,32 +23,13 @@ namespace eWolfCloneAndPack.Clone
             }
         }
 
-        public bool TryGetDrive(ref string riskyDrive, string driveNameToGet)
-        {
-            DriveInfo[] drives = DriveInfo.GetDrives();
-            for (int i = 0; i < drives.Length; i++)
-            {
-                try
-                {
-                    string driveName = drives[i].VolumeLabel;
-                    if (driveName == driveNameToGet)
-                    {
-                        riskyDrive = drives[i].Name;
-                        return true;
-                    }
-                }
-                catch
-                {
-                }
-            }
-            return false;
-        }
+        
 
         internal void Clone()
         {
             Console.WriteLine($"=============================================");
             string driveLetter = "";
-            if (TryGetDrive(ref driveLetter, "RiskyStore"))
+            if (DriverHelpers.TryGetDrive(ref driveLetter, "RiskyStore"))
             {
                 string destination = $"{driveLetter}Development\\{Name}";
 
@@ -61,7 +43,7 @@ namespace eWolfCloneAndPack.Clone
                 Console.WriteLine($"Finished Cloning {From} to {destination}");
             }
 
-            if (TryGetDrive(ref driveLetter, "Master2"))
+            if (DriverHelpers.TryGetDrive(ref driveLetter, "Master2"))
             {
                 string destination = $"{driveLetter}Development\\{Name}";
 
