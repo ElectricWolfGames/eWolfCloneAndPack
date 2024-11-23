@@ -1,6 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using eWolfCloneAndPack.Clone;
 
-namespace eWolfCloneAndPack.Clone
+namespace eWolfCloneAndPack
 {
     internal class Program
     {
@@ -8,32 +8,71 @@ namespace eWolfCloneAndPack.Clone
         {
             Console.WriteLine("--Cloning Started--");
 
-            var cfob2 = new CloneFolder(@"C:\Unity3d", "Sci-Fi_Objects_Pack2_eWolf", ProjectType.Unity3D);
-            cfob2.Clone();
+            var railwayTrackBuilder = new CloneFolder(@"C:\Unity3d\", "RailwayTrackBuilder", ProjectType.Unity3D);
+            railwayTrackBuilder.Clone();
 
-            var cfob1 = new CloneFolder(@"C:\Unity3d", "Sci-Fi_Objects_Pack1", ProjectType.Unity3D);
-            cfob1.Clone();
+            var railway = new CloneFolder(@"C:\Unity3d\", "Railways", ProjectType.Unity3D);
+            railway.Clone();
 
-            var cfss = new CloneFolder(@"C:\Unity3d", "SpaceSalvager", ProjectType.Unity3D);
-            cfss.Clone();
-            
-            var cfrp = new CloneFolder(@"C:\Unity3d", "Sci-Fi_Rooms_Pack1_eWolf", ProjectType.Unity3D);
-            cfrp.Clone();
-            
-            //var cfpb = new CloneFolder(@"C:\Unity3d", "PipeBuilder", ProjectType.Unity3D);
-            //cfpb.Clone();
+            var book = new CloneFolder(@"E:\Unity3D\Projects\", "OpenBook", ProjectType.Unity3D);
+            book.Clone();
 
-            var cfesb = new CloneFolder(@"E:\Projects\GitHub\eWolfSiteBuilder\", "eWolfSiteBuilder", ProjectType.VSProject);
-            cfesb.Clone();
+            var gcr = new CloneFolder(@"E:\Unity3D\Projects\", "GCR", ProjectType.Unity3D);
+            gcr.Clone();
 
-            var cfrsb = new CloneFolder(@"E:\Projects\eWolfModelRailwayWeb\RailwayWebBuilder\", "RailwayWebBuilder", ProjectType.VSProject);
-            cfrsb.Clone();
+            var twoD = new CloneFolder(@"E:\Unity3D\Projects\", "2DLabs", ProjectType.Unity3D);
+            twoD.Clone();
+
+            var eWoldSiteBuilder = new CloneFolder(@"E:\Projects\GitHub\eWolfSiteBuilder\", "eWolfSiteBuilder", ProjectType.VSProject);
+            eWoldSiteBuilder.Clone();
+
+            var codeExamples = new CloneFolder(@"E:\Unity3D\Projects\", "CodeExamples", ProjectType.Unity3D);
+            codeExamples.Clone();
+
+            var carryOnTraining = new CloneFolder(@"C:\Unity3d", "CarryOnTraining", ProjectType.Unity3D);
+            carryOnTraining.Clone();
+
+            var trainMatch = new CloneFolder(@"C:\Unity3d", "TrainMatch", ProjectType.Unity3D);
+            trainMatch.Clone();
+
+            var fenceBuilder = new CloneFolder(@"E:\Unity3D\Projects\", "FenceWallHedgeBuilder", ProjectType.Unity3D);
+            fenceBuilder.Clone();
+
+            var fillTheBox = new CloneFolder(@"C:\Unity3d", "FillTheBox", ProjectType.Unity3D);
+            fillTheBox.Clone();
+
+            var eWolfSciFiObject2 = new CloneFolder(@"C:\Unity3d", "Sci-Fi_Objects_Pack2_eWolf", ProjectType.Unity3D);
+            eWolfSciFiObject2.Clone();
+
+            var eWolfSciFiObject1 = new CloneFolder(@"C:\Unity3d", "Sci-Fi_Objects_Pack1", ProjectType.Unity3D);
+            eWolfSciFiObject1.Clone();
+
+            var spaceSalvager = new CloneFolder(@"C:\Unity3d", "SpaceSalvager", ProjectType.Unity3D);
+            spaceSalvager.Clone();
+
+            var eWolfSciFiPack1 = new CloneFolder(@"C:\Unity3d", "Sci-Fi_Rooms_Pack1_eWolf", ProjectType.Unity3D);
+            eWolfSciFiPack1.Clone();
+
+            var railwayWebBuilder = new CloneFolder(@"E:\Projects\eWolfModelRailwayWeb\RailwayWebBuilder\", "RailwayWebBuilder", ProjectType.VSProject);
+            railwayWebBuilder.Clone();
+
+            //var monDispl = new CloneFolder(@"E:\Unity3D\Projects\", "MonitorDisplay", ProjectType.Unity3D);
+            //monDispl.Clone();
 
             var cfTrains = new CopyFolderToRisk(@"E:\Trains", "Trains");
             cfTrains.Clone();
 
             var cfGCR = new CopyFolderToRisk(@"E:\GCR", "GCR");
             cfGCR.Clone();
+
+            var videosSync = new SyncFolders("VideoStoreMain", "MasterBackup", "Films");
+            videosSync.Sync();
+
+            var videosSyncSci = new SyncFolders("VideoStoreMain", "MasterBackup", "FilmsClassicSci-Fi");
+            videosSyncSci.Sync();
+
+            var videosSyncTv = new SyncFolders("VideoStoreMain", "MasterBackup", "TV");
+            videosSyncTv.Sync();
 
             //var cfTextures = new CopyFolderToRisk(@"E:\Textures", "Textures");
             //cfTextures.Clone();*/
@@ -43,31 +82,3 @@ namespace eWolfCloneAndPack.Clone
         }
     }
 }
-
-/*
-
-var cf2 = new CloneFolder(@"C:\Unity3d", "SpaceSalvager", ProjectType.Unity3D);
-cf2.Clone();
-
-cf2 = new CloneFolder(@"C:\Unity3d", "Sci-Fi_Objects_Pack1", ProjectType.Unity3D);
-cf2.Clone();
-
-cf2 = new CloneFolder(@"C:\Unity3d", "Sci-Fi_Objects_Pack2_eWolf", ProjectType.Unity3D);
-cf2.Clone();
-
-cf2 = new CloneFolder(@"C:\Unity3d", "TrainMatch", ProjectType.Unity3D);
-cf2.Clone();
-*/
-
-/*var cf2 = new CloneFolder(@"E:\Unity3D\Projects_Done", "GemChaserAndroid", ProjectType.Unity3D);
-cf2.Clone();
-cf2 = new CloneFolder(@"E:\Unity3D\Projects_Done", "PipeBuilder", ProjectType.Unity3D);
-cf2.Clone();
-cf2 = new CloneFolder(@"E:\Unity3D\Projects_Done", "RoadBuilder", ProjectType.Unity3D);
-cf2.Clone();
-cf2 = new CloneFolder(@"E:\Unity3D\Projects_Done", "SpaceGame", ProjectType.Unity3D);
-cf2.Clone();*/
-/*cf2 = new CloneFolder(@"C:\Unity3d", "TrainMatch", ProjectType.Unity3D);
-cf2.Clone();
-cf2 = new CloneFolder(@"C:\Unity3d", "TrainMatch", ProjectType.Unity3D);
-cf2.Clone();*/

@@ -1,8 +1,11 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using eWolfCloneAndPack.Clone;
+// See https://aka.ms/new-console-template for more information
+
 using eWolfCloneAndPack.Helpers;
 
-namespace eWolfCloneAndPack.Clone
+namespace eWolfCloneAndPack
 {
     internal class SyncFolders
     {
@@ -26,7 +29,7 @@ namespace eWolfCloneAndPack.Clone
             {
                 Console.WriteLine($"Can't find drive letter for {_fromDrive}");
                 return;
-            } 
+            }
             if (!DriverHelpers.TryGetDrive(ref _toDriveLetter, _toDrive))
             {
                 Console.WriteLine($"Can't find drive letter for {_toDrive}");

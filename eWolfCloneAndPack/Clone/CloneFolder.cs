@@ -1,5 +1,4 @@
 ﻿using eWolfCloneAndPack.Configuration;
-using System.Xml.Linq;
 
 namespace eWolfCloneAndPack.Clone
 {

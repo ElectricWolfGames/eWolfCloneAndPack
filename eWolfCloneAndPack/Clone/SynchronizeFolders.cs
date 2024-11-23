@@ -56,36 +56,44 @@
 
                     if (fileDetailsFrom.Ticks > fileDetailsTo.Ticks)
                     {
-                        File.Copy(file, dest, true);
-                        Console.Write("+");
-                        updated = true;
+                        try
+                        {
+                            File.Copy(file, dest, true);
+                            Console.Write("+");
+                            updated = true;
+                        }
+                        catch { }
                     }
                 }
             }
-            
+
             Console.Write("]");
             RemoveEmptyFolders(to);
             return updated;
         }
 
+        public static void RemoveFromBackUp(string from, string to)
+        {
+            try
+            {
+                string[] filesTo = Directory.GetFiles(to, "", SearchOption.AllDirectories);
+                foreach (var file in filesTo)
+                {
+                    string partFile = file.Replace(to, string.Empty);
+                    string dest = from + partFile;
+                    if (!File.Exists(dest))
+                    {
+                        Console.Write("-");
+                        File.Delete(file);
+                    }
+                }
+            }
+            catch { }
+        }
+
         private static void RemoveEmptyFolders(string to)
         {
             // Can we remove any folder that is empty?
-        }
-
-        public static void RemoveFromBackUp(string from, string to)
-        {
-            string[] filesTo = Directory.GetFiles(to, "", SearchOption.AllDirectories);
-            foreach (var file in filesTo)
-            {
-                string partFile = file.Replace(to, string.Empty);
-                string dest = from + partFile;
-                if (!File.Exists(dest))
-                {
-                    Console.Write("-");
-                    File.Delete(file);
-                }
-            }
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using eWolfCloneAndPack.Configuration;
-using eWolfCloneAndPack.Helpers;
+﻿using eWolfCloneAndPack.Helpers;
 
 namespace eWolfCloneAndPack.Clone
 {
@@ -23,7 +22,7 @@ namespace eWolfCloneAndPack.Clone
             }
         }
 
-        
+
 
         internal void Clone()
         {
