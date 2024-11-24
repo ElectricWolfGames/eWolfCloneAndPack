@@ -1,10 +1,31 @@
 ﻿using eWolfCloneAndPack.Clone;
 
-namespace eWolfCloneAndPack
+namespace eWolfCloneAndPack.Helpers
 {
     internal static class DrivesHelper
     {
-        private static List<string> _backUpDrives = new List<string>() { "RiskyStore", "Master2" };
+        private static readonly List<string> _backUpDrives = new() { "RiskyStore", "Master2" };
+
+        public static bool TryGetDrive(ref string riskyDrive, string driveNameToGet)
+        {
+            DriveInfo[] drives = DriveInfo.GetDrives();
+            for (int i = 0; i < drives.Length; i++)
+            {
+                try
+                {
+                    string driveName = drives[i].VolumeLabel;
+                    if (driveName == driveNameToGet)
+                    {
+                        riskyDrive = drives[i].Name;
+                        return true;
+                    }
+                }
+                catch
+                {
+                }
+            }
+            return false;
+        }
 
         internal static void CopyBackUps(CloneFolder cloneFolder)
         {
@@ -34,7 +55,7 @@ namespace eWolfCloneAndPack
 
         private static List<string> GetUsableDrives()
         {
-            List<string> drivesLetters = new List<string>();
+            List<string> drivesLetters = new();
             DriveInfo[] drives = DriveInfo.GetDrives();
             for (int i = 0; i < drives.Length; i++)
             {

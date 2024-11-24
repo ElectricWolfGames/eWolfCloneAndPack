@@ -1,20 +1,16 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using eWolfCloneAndPack.Clone;
-// See https://aka.ms/new-console-template for more information
-
+﻿using eWolfCloneAndPack.Clone;
 using eWolfCloneAndPack.Helpers;
 
 namespace eWolfCloneAndPack
 {
     internal class SyncFolders
     {
+        private string _folder;
         private string _fromDrive;
         private string _fromDriveLetter;
 
         private string _toDrive;
         private string _toDriveLetter;
-        private string _folder;
 
         public SyncFolders(string fromDrive, string toDrive, string folder)
         {
@@ -25,12 +21,12 @@ namespace eWolfCloneAndPack
 
         internal void Sync()
         {
-            if (!DriverHelpers.TryGetDrive(ref _fromDriveLetter, _fromDrive))
+            if (!DrivesHelper.TryGetDrive(ref _fromDriveLetter, _fromDrive))
             {
                 Console.WriteLine($"Can't find drive letter for {_fromDrive}");
                 return;
             }
-            if (!DriverHelpers.TryGetDrive(ref _toDriveLetter, _toDrive))
+            if (!DrivesHelper.TryGetDrive(ref _toDriveLetter, _toDrive))
             {
                 Console.WriteLine($"Can't find drive letter for {_toDrive}");
                 return;
@@ -49,7 +45,6 @@ namespace eWolfCloneAndPack
             Directory.CreateDirectory(destination);
 
             bool updated = SynchronizeFolders.Do(folder, destination, projectTypeUnity3D);
-
 
             int i = 0;
             i++;

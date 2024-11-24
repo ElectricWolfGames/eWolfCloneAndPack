@@ -22,13 +22,11 @@ namespace eWolfCloneAndPack.Clone
             }
         }
 
-
-
         internal void Clone()
         {
             Console.WriteLine($"=============================================");
             string driveLetter = "";
-            if (DriverHelpers.TryGetDrive(ref driveLetter, "RiskyStore"))
+            if (DrivesHelper.TryGetDrive(ref driveLetter, "RiskyStore"))
             {
                 string destination = $"{driveLetter}Development\\{Name}";
 
@@ -42,7 +40,7 @@ namespace eWolfCloneAndPack.Clone
                 Console.WriteLine($"Finished Cloning {From} to {destination}");
             }
 
-            if (DriverHelpers.TryGetDrive(ref driveLetter, "Master2"))
+            if (DrivesHelper.TryGetDrive(ref driveLetter, "Master2"))
             {
                 string destination = $"{driveLetter}Development\\{Name}";
 

@@ -2,7 +2,7 @@
 using eWolfCloneAndPack.Configuration;
 using System.IO.Compression;
 
-namespace eWolfCloneAndPack
+namespace eWolfCloneAndPack.Helpers
 {
     internal static class ZipHelper
     {

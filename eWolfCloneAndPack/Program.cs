@@ -1,4 +1,5 @@
-﻿using eWolfCloneAndPack.Clone;
+﻿using eWolfCloneAndPack.Actions;
+using eWolfCloneAndPack.Clone;
 
 namespace eWolfCloneAndPack
 {
@@ -79,6 +80,9 @@ namespace eWolfCloneAndPack
 
             //cf = new CloneFolder(@"C:\Unity3d", "TrainMatch", ProjectType.Unity3D);
             //cf.Clone();
+
+            TrimZips tz = new();
+            tz.Do();
         }
     }
 }
