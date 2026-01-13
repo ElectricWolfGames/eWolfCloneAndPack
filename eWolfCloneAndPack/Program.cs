@@ -9,6 +9,9 @@ namespace eWolfCloneAndPack
         {
             Console.WriteLine("--Cloning Started--");
 
+            var PersonalData = new CloneFolder(@"E:\Personal\", "PersonalData", ProjectType.Data);
+            PersonalData.Clone();
+
             var railwayTrackBuilder = new CloneFolder(@"C:\Unity3d\", "RailwayTrackBuilder", ProjectType.Unity3D);
             railwayTrackBuilder.Clone();
 
@@ -57,29 +60,26 @@ namespace eWolfCloneAndPack
             var railwayWebBuilder = new CloneFolder(@"E:\Projects\eWolfModelRailwayWeb\RailwayWebBuilder\", "RailwayWebBuilder", ProjectType.VSProject);
             railwayWebBuilder.Clone();
 
-            //var monDispl = new CloneFolder(@"E:\Unity3D\Projects\", "MonitorDisplay", ProjectType.Unity3D);
-            //monDispl.Clone();
-
             var cfTrains = new CopyFolderToRisk(@"E:\Trains", "Trains");
             cfTrains.Clone();
 
             var cfGCR = new CopyFolderToRisk(@"E:\GCR", "GCR");
             cfGCR.Clone();
 
-            var videosSync = new SyncFolders("VideoStoreMain", "MasterBackup", "Films");
+            /*var videosSync dont run= new SyncFolders("VideoStoreMain", "MasterBackup", "Films");
             videosSync.Sync();
 
-            var videosSyncSci = new SyncFolders("VideoStoreMain", "MasterBackup", "FilmsClassicSci-Fi");
+            var videosSyncSci dont run = new SyncFolders("VideoStoreMain", "MasterBackup", "FilmsClassicSci-Fi");
             videosSyncSci.Sync();
 
-            var videosSyncTv = new SyncFolders("VideoStoreMain", "MasterBackup", "TV");
+            var videosSyncTv  dont run = new SyncFolders("VideoStoreMain", "MasterBackup", "TV");
             videosSyncTv.Sync();
-
+            */
             //var cfTextures = new CopyFolderToRisk(@"E:\Textures", "Textures");
             //cfTextures.Clone();*/
 
-            //cf = new CloneFolder(@"C:\Unity3d", "TrainMatch", ProjectType.Unity3D);
-            //cf.Clone();
+            var cf = new CloneFolder(@"C:\Unity3d", "TrainMatch", ProjectType.Unity3D);
+            cf.Clone();
 
             TrimZips tz = new();
             tz.Do();
