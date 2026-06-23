@@ -39,11 +39,16 @@ namespace eWolfCloneAndPack.Clone
             Console.WriteLine($"=============================================");
             Console.WriteLine($"Starting Cloning {From} to {Destination}");
 
-            IProjectTypeDetails projectTypeUnity3D = new ProjectTypeUnity3D();
+            IProjectTypeDetails projectTypeDetails = ProjectType switch
+            {
+                ProjectType.VSProject => new ProjectTypeVSProject(),
+                ProjectType.Data => new ProjectTypeData(),
+                _ => new ProjectTypeUnity3D(),
+            };
 
             Directory.CreateDirectory(Destination);
 
-            bool updated = SynchronizeFolders.Do(From, Destination, projectTypeUnity3D);
+            bool updated = SynchronizeFolders.Do(From, Destination, projectTypeDetails);
             Console.WriteLine($"Finished Cloning {From} to {Destination}");
 
             if (updated)

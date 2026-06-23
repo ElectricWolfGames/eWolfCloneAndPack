@@ -93,7 +93,12 @@
 
         private static void RemoveEmptyFolders(string to)
         {
-            // Can we remove any folder that is empty?
+            foreach (var dir in Directory.GetDirectories(to, "*", SearchOption.AllDirectories)
+                         .OrderByDescending(d => d.Length))
+            {
+                if (!Directory.EnumerateFileSystemEntries(dir).Any())
+                    Directory.Delete(dir);
+            }
         }
     }
 }

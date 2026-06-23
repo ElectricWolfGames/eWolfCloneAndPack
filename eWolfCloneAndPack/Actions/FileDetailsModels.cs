@@ -12,7 +12,11 @@
         {
             FullPath = path;
             Name = Path.GetFileName(path);
-            DateTime = DateTime.Parse(Name.Substring(0, 10));
+            if (Name.Length >= 10 && DateTime.TryParseExact(Name.Substring(0, 10), "yyyy-MM-dd",
+                    null, System.Globalization.DateTimeStyles.None, out var parsed))
+                DateTime = parsed;
+            else
+                DateTime = File.GetLastWriteTime(path);
         }
     }
 }

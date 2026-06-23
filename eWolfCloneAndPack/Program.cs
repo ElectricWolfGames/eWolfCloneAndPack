@@ -90,9 +90,6 @@ namespace eWolfCloneAndPack
             //var cfTextures = new CopyFolderToRisk(@"E:\Textures", "Textures");
             //cfTextures.Clone();*/
 
-            var cf = new CloneFolder(@"C:\Unity3d", "TrainMatch", ProjectType.Unity3D);
-            cf.Clone();
-
             TrimZips tz = new();
             tz.Do();
         }

@@ -24,4 +24,22 @@
             }
         }
     }
+
+    internal class ProjectTypeVSProject : IProjectTypeDetails
+    {
+        private List<string> _excludedFolders = new List<string>
+        {
+            @"\bin\",
+            @"\obj\",
+            @"\.vs\",
+            @"\.svn\",
+        };
+
+        public List<string> GetExcludedFolders => _excludedFolders;
+    }
+
+    internal class ProjectTypeData : IProjectTypeDetails
+    {
+        public List<string> GetExcludedFolders => new List<string>();
+    }
 }

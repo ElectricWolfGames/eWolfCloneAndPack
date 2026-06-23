@@ -1,24 +1,30 @@
-﻿namespace eWolfCloneAndPack.Actions
+﻿using eWolfCloneAndPack.Configuration;
+
+namespace eWolfCloneAndPack.Actions
 {
     internal partial class TrimZips
     {
         internal void Do()
         {
-            var folders = Directory.GetDirectories("E:\\_BackUpZips\\Unity3D");
-            foreach (var folder in folders)
-            {
-                Trim(folder);
-            }
+            TrimDrive(Settings.ZipStore);
 
             try
             {
-                folders = Directory.GetDirectories("M:\\_BackUpZips\\Unity3D");
-                foreach (var folder in folders)
-                {
-                    Trim(folder);
-                }
+                TrimDrive(@"M:\_BackUpZips");
             }
             catch { }
+        }
+
+        private void TrimDrive(string baseStore)
+        {
+            var unityFolder = Path.Combine(baseStore, "Unity3D");
+            if (!Directory.Exists(unityFolder))
+                return;
+
+            foreach (var folder in Directory.GetDirectories(unityFolder))
+            {
+                Trim(folder);
+            }
         }
 
         private void RemoveExtras(IEnumerable<FileDetailsModels> items)
