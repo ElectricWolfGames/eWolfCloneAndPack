@@ -9,8 +9,20 @@ namespace eWolfCloneAndPack
         {
             Console.WriteLine("--Cloning Started--");
 
+            var eWoldSiteVintageSciFiBuilder = new CloneFolder(@"E:\Projects\", "VintageSciFi", ProjectType.VSProject);
+            eWoldSiteVintageSciFiBuilder.Clone();
+
+            var PersonalDataAI = new CloneFolder(@"E:\Projects_AI\", "Projects_AI", ProjectType.Data);
+            PersonalDataAI.Clone();
+
             var PersonalData = new CloneFolder(@"E:\Personal\", "PersonalData", ProjectType.Data);
             PersonalData.Clone();
+            var photo2023 = new CloneFolder(@"E:\Personal\Pictures\", "2023", ProjectType.Data);
+            photo2023.Clone();
+            var photo2024 = new CloneFolder(@"E:\Personal\Pictures\", "2024", ProjectType.Data);
+            photo2024.Clone();
+            var photo2026 = new CloneFolder(@"E:\Personal\Pictures\", "2026", ProjectType.Data);
+            photo2026.Clone();
 
             var railwayTrackBuilder = new CloneFolder(@"C:\Unity3d\", "RailwayTrackBuilder", ProjectType.Unity3D);
             railwayTrackBuilder.Clone();
@@ -60,11 +72,11 @@ namespace eWolfCloneAndPack
             var railwayWebBuilder = new CloneFolder(@"E:\Projects\eWolfModelRailwayWeb\RailwayWebBuilder\", "RailwayWebBuilder", ProjectType.VSProject);
             railwayWebBuilder.Clone();
 
-            var cfTrains = new CopyFolderToRisk(@"E:\Trains", "Trains");
-            cfTrains.Clone();
+            //var cfTrains = new CopyFolderToRisk(@"E:\Trains", "Trains");
+            //cfTrains.Clone();
 
-            var cfGCR = new CopyFolderToRisk(@"E:\GCR", "GCR");
-            cfGCR.Clone();
+            //var cfGCR = new CopyFolderToRisk(@"E:\GCR", "GCR");
+            //cfGCR.Clone();
 
             /*var videosSync dont run= new SyncFolders("VideoStoreMain", "MasterBackup", "Films");
             videosSync.Sync();
