@@ -12,7 +12,7 @@ namespace eWolfCloneAndPack
             var eWoldSiteVintageSciFiBuilder = new CloneFolder(@"E:\Projects\", "VintageSciFi", ProjectType.VSProject);
             eWoldSiteVintageSciFiBuilder.Clone();
 
-            var PersonalDataAI = new CloneFolder(@"E:\Projects_AI\", "Projects_AI", ProjectType.Data);
+            var PersonalDataAI = new CloneFolder(@"E:\", "Projects_AI", ProjectType.VSProject);
             PersonalDataAI.Clone();
 
             var PersonalData = new CloneFolder(@"E:\Personal\", "PersonalData", ProjectType.Data);

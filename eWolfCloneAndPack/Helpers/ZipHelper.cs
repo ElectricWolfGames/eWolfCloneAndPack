@@ -79,6 +79,9 @@ namespace eWolfCloneAndPack.Helpers
                     RemoveAllButLatest(kvp.Value);
                 }
             }
+
+            string[] remainingFiles = Directory.GetFiles(zipPath, $"*{cloneFolderDetails.Name}*", SearchOption.AllDirectories);
+            RemoveAllButLatestPerMonth(remainingFiles);
         }
 
         private static string GetBaseFolder(CloneFolder cloneFolderDetails, DateTime dt)
@@ -112,6 +115,25 @@ namespace eWolfCloneAndPack.Helpers
                     continue;
                 }
                 File.Delete(filekv.Value);
+            }
+        }
+
+        private static void RemoveAllButLatestPerMonth(string[] files)
+        {
+            var filesByMonth = files.GroupBy(file =>
+            {
+                DateTime lastWriteTime = File.GetLastWriteTime(file);
+                return new DateTime(lastWriteTime.Year, lastWriteTime.Month, 1);
+            });
+
+            foreach (var monthGroup in filesByMonth)
+            {
+                var ordered = monthGroup.OrderByDescending(File.GetLastWriteTime).ToList();
+                for (int i = 1; i < ordered.Count; i++)
+                {
+                    Console.WriteLine($"Removing {ordered[i]} as it is not the latest zip for {monthGroup.Key:yyyy-MM}");
+                    File.Delete(ordered[i]);
+                }
             }
         }
     }
