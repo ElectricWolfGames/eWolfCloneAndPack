@@ -7,10 +7,10 @@ namespace eWolfCloneAndPack
     {
         private string _folder;
         private string _fromDrive;
-        private string _fromDriveLetter;
+        private string _fromDriveLetter = string.Empty;
 
         private string _toDrive;
-        private string _toDriveLetter;
+        private string _toDriveLetter = string.Empty;
 
         public SyncFolders(string fromDrive, string toDrive, string folder)
         {

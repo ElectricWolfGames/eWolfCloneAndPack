@@ -14,7 +14,7 @@ namespace eWolfCloneAndPack.Helpers
             foreach (string fileName in files)
             {
                 string dest = GetOtherDriveFolder(cloneFolderDetails, dt, driveLetter);
-                Directory.CreateDirectory(Path.GetDirectoryName(dest));
+                Directory.CreateDirectory(dest);
 
                 string name = Path.GetFileName(fileName);
                 if (!File.Exists(dest + name))
@@ -61,7 +61,7 @@ namespace eWolfCloneAndPack.Helpers
             {
                 long fileLength = new FileInfo(fileName).Length;
 
-                List<string> currentfiles;
+                List<string>? currentfiles;
                 if (fileList.TryGetValue(fileLength, out currentfiles))
                 {
                     currentfiles.Add(fileName);

@@ -40,7 +40,7 @@
                 string dest = to + partFile;
                 if (!File.Exists(dest))
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(dest));
+                    Directory.CreateDirectory(Path.GetDirectoryName(dest)!);
                     try
                     {
                         File.Copy(file, dest);
