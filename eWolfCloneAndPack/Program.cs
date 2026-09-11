@@ -5,8 +5,11 @@ namespace eWolfCloneAndPack
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static int Main(string[] args)
         {
+            if (args.Length > 0)
+                return CloneFromArgs(args);
+
             Console.WriteLine("--Cloning Started--");
 
             //var numberTrail_Unity = new CloneFolder(@"C:\Unity3d\", "NumberTrail", ProjectType.Unity3D);
@@ -100,6 +103,31 @@ namespace eWolfCloneAndPack
 
             TrimZips tz = new();
             tz.Do();
+            return 0;
+        }
+
+        // Clone a single folder from the command line, e.g.
+        //   eWolfCloneAndPack E:\Personal PersonalData Data
+        private static int CloneFromArgs(string[] args)
+        {
+            if (args.Length != 3 || !Enum.TryParse(args[2], ignoreCase: true, out ProjectType projectType))
+            {
+                Console.WriteLine("Usage: eWolfCloneAndPack <folder> <name> <projectType>");
+                Console.WriteLine($"  projectType: {string.Join(", ", Enum.GetNames<ProjectType>())}");
+                Console.WriteLine(@"  e.g. eWolfCloneAndPack E:\Personal PersonalData Data");
+                return 1;
+            }
+
+            var cloneFolder = new CloneFolder(args[0], args[1], projectType);
+            if (!Directory.Exists(cloneFolder.From))
+            {
+                Console.WriteLine($"Folder not found: {cloneFolder.From}");
+                return 1;
+            }
+
+            Console.WriteLine("--Cloning Started--");
+            cloneFolder.Clone();
+            return 0;
         }
     }
 }
