@@ -9,11 +9,14 @@ namespace eWolfCloneAndPack
         {
             Console.WriteLine("--Cloning Started--");
 
-            var eWoldSiteVintageSciFiBuilder = new CloneFolder(@"E:\Projects\", "VintageSciFi", ProjectType.VSProject);
-            eWoldSiteVintageSciFiBuilder.Clone();
+            //var numberTrail_Unity = new CloneFolder(@"C:\Unity3d\", "NumberTrail", ProjectType.Unity3D);
+            //numberTrail_Unity.Clone();
 
-            var PersonalDataAI = new CloneFolder(@"E:\", "Projects_AI", ProjectType.VSProject);
-            PersonalDataAI.Clone();
+            //var TreeNumberProblem_Unity = new CloneFolder(@"C:\Unity3d\", "3NoProblem", ProjectType.Unity3D);
+            //TreeNumberProblem_Unity.Clone();
+
+            //var SpinnerMaths_Unity = new CloneFolder(@"C:\Unity3d\", "SpinnerMaths", ProjectType.Unity3D);
+            //SpinnerMaths_Unity.Clone();
 
             var PersonalData = new CloneFolder(@"E:\Personal\", "PersonalData", ProjectType.Data);
             PersonalData.Clone();
@@ -21,13 +24,18 @@ namespace eWolfCloneAndPack
             photo2023.Clone();
             var photo2024 = new CloneFolder(@"E:\Personal\Pictures\", "2024", ProjectType.Data);
             photo2024.Clone();
+            var photo2025 = new CloneFolder(@"E:\Personal\Pictures\", "2025", ProjectType.Data);
+            photo2025.Clone();
             var photo2026 = new CloneFolder(@"E:\Personal\Pictures\", "2026", ProjectType.Data);
             photo2026.Clone();
+
+            var eWoldSiteVintageSciFiBuilder = new CloneFolder(@"E:\Projects\", "VintageSciFi", ProjectType.VSProject);
+            eWoldSiteVintageSciFiBuilder.Clone();
 
             var railwayTrackBuilder = new CloneFolder(@"C:\Unity3d\", "RailwayTrackBuilder", ProjectType.Unity3D);
             railwayTrackBuilder.Clone();
 
-            var railway = new CloneFolder(@"C:\Unity3d\", "Railways", ProjectType.Unity3D);
+            var railway = new CloneFolder(@"C:\Unity3d\", "Railway_Trains_Freight", ProjectType.Unity3D);
             railway.Clone();
 
             var book = new CloneFolder(@"E:\Unity3D\Projects\", "OpenBook", ProjectType.Unity3D);
