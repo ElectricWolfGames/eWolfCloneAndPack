@@ -34,21 +34,21 @@ namespace eWolfCloneAndPack.Clone
             }
         }
 
+        private IProjectTypeDetails ProjectTypeDetails => ProjectType switch
+        {
+            ProjectType.VSProject => new ProjectTypeVSProject(),
+            ProjectType.Data => new ProjectTypeData(),
+            _ => new ProjectTypeUnity3D(),
+        };
+
         internal void Clone()
         {
             Console.WriteLine($"=============================================");
             Console.WriteLine($"Starting Cloning {From} to {Destination}");
 
-            IProjectTypeDetails projectTypeDetails = ProjectType switch
-            {
-                ProjectType.VSProject => new ProjectTypeVSProject(),
-                ProjectType.Data => new ProjectTypeData(),
-                _ => new ProjectTypeUnity3D(),
-            };
-
             Directory.CreateDirectory(Destination);
 
-            bool updated = SynchronizeFolders.Do(From, Destination, projectTypeDetails);
+            bool updated = SynchronizeFolders.Do(From, Destination, ProjectTypeDetails);
             Console.WriteLine($"Finished Cloning {From} to {Destination}");
 
             if (updated)
@@ -57,6 +57,12 @@ namespace eWolfCloneAndPack.Clone
                 ZipHelper.RemoveZipDups(this);
                 DrivesHelper.CopyBackUps(this);
             }
+        }
+
+        // True if Clone() would copy or delete anything. Does not modify the backup.
+        internal bool IsOutOfDate()
+        {
+            return SynchronizeFolders.IsOutOfDate(From, Destination, ProjectTypeDetails);
         }
     }
 }

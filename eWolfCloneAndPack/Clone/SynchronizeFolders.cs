@@ -23,17 +23,7 @@
 
             foreach (var file in files)
             {
-                bool copy = true;
-
-                foreach (var excludedFolder in excludedFolders)
-                {
-                    if (file.Contains(excludedFolder))
-                    {
-                        copy = false;
-                        break;
-                    }
-                }
-                if (!copy)
+                if (IsExcluded(file, excludedFolders))
                     continue;
 
                 string partFile = file.Replace(from, string.Empty);
@@ -72,6 +62,39 @@
             return updated;
         }
 
+        // Read-only check: would Do() copy or delete anything?
+        public static bool IsOutOfDate(string from, string to, IProjectTypeDetails projectTypeDetails)
+        {
+            if (!Directory.Exists(to))
+                return true;
+
+            List<string> excludedFolders = projectTypeDetails.GetExcludedFolders;
+
+            // Anything in the source that is missing from, or newer than, the backup
+            foreach (var file in Directory.GetFiles(from, "", SearchOption.AllDirectories))
+            {
+                if (IsExcluded(file, excludedFolders))
+                    continue;
+
+                string dest = to + file.Replace(from, string.Empty);
+                if (!File.Exists(dest))
+                    return true;
+
+                if (File.GetLastWriteTime(file).Ticks > File.GetLastWriteTime(dest).Ticks)
+                    return true;
+            }
+
+            // Anything in the backup that no longer exists in the source
+            foreach (var file in Directory.GetFiles(to, "", SearchOption.AllDirectories))
+            {
+                string source = from + file.Replace(to, string.Empty);
+                if (!File.Exists(source))
+                    return true;
+            }
+
+            return false;
+        }
+
         public static void RemoveFromBackUp(string from, string to)
         {
             try
@@ -89,6 +112,16 @@
                 }
             }
             catch { }
+        }
+
+        private static bool IsExcluded(string file, List<string> excludedFolders)
+        {
+            foreach (var excludedFolder in excludedFolders)
+            {
+                if (file.Contains(excludedFolder))
+                    return true;
+            }
+            return false;
         }
 
         private static void RemoveEmptyFolders(string to)

@@ -1,16 +1,69 @@
 ﻿using eWolfCloneAndPack.Actions;
 using eWolfCloneAndPack.Clone;
+using System.Diagnostics.CodeAnalysis;
 
 namespace eWolfCloneAndPack
 {
     internal class Program
     {
+        // Clone a single folder from the command line, e.g.
+        //   eWolfCloneAndPack E:\Personal PersonalData Data
+        private static int CloneFromArgs(string[] args)
+        {
+            if (!TryParseCloneFolder(args, out CloneFolder? cloneFolder))
+                return 1;
+
+            Console.WriteLine("--Cloning Started--");
+            cloneFolder.Clone();
+            return 0;
+        }
+
+        // Check whether a backup is out of date without touching anything, e.g.
+        //   eWolfCloneAndPack --check E:\Personal PersonalData Data
+        // Prints "true" (exit code 1) if the backup is out of date, "false" (exit code 0) if it is current.
+        private static int CheckFromArgs(string[] args)
+        {
+            if (!TryParseCloneFolder(args, out CloneFolder? cloneFolder))
+                return 2;
+
+            bool outOfDate = cloneFolder.IsOutOfDate();
+            Console.WriteLine(outOfDate ? "true" : "false");
+            return outOfDate ? 1 : 0;
+        }
+
+        private static bool TryParseCloneFolder(string[] args, [NotNullWhen(true)] out CloneFolder? cloneFolder)
+        {
+            cloneFolder = null;
+            if (args.Length != 3 || !Enum.TryParse(args[2], ignoreCase: true, out ProjectType projectType))
+            {
+                Console.WriteLine("Usage: eWolfCloneAndPack [--check] <folder> <name> <projectType>");
+                Console.WriteLine($"  projectType: {string.Join(", ", Enum.GetNames<ProjectType>())}");
+                Console.WriteLine(@"  e.g. eWolfCloneAndPack E:\Personal PersonalData Data");
+                Console.WriteLine(@"       eWolfCloneAndPack --check E:\Personal PersonalData Data");
+                return false;
+            }
+
+            cloneFolder = new CloneFolder(args[0], args[1], projectType);
+            if (!Directory.Exists(cloneFolder.From))
+            {
+                Console.WriteLine($"Folder not found: {cloneFolder.From}");
+                return false;
+            }
+            return true;
+        }
+
         private static int Main(string[] args)
         {
+            if (args.Length > 0 && args[0].Equals("--check", StringComparison.OrdinalIgnoreCase))
+                return CheckFromArgs(args[1..]);
+
             if (args.Length > 0)
                 return CloneFromArgs(args);
 
             Console.WriteLine("--Cloning Started--");
+
+            var book2 = new CloneFolder(@"E:\Unity3D\Projects\", "BuildingBuilder", ProjectType.Unity3D);
+            book2.Clone();
 
             //var numberTrail_Unity = new CloneFolder(@"C:\Unity3d\", "NumberTrail", ProjectType.Unity3D);
             //numberTrail_Unity.Clone();
@@ -103,30 +156,6 @@ namespace eWolfCloneAndPack
 
             TrimZips tz = new();
             tz.Do();
-            return 0;
-        }
-
-        // Clone a single folder from the command line, e.g.
-        //   eWolfCloneAndPack E:\Personal PersonalData Data
-        private static int CloneFromArgs(string[] args)
-        {
-            if (args.Length != 3 || !Enum.TryParse(args[2], ignoreCase: true, out ProjectType projectType))
-            {
-                Console.WriteLine("Usage: eWolfCloneAndPack <folder> <name> <projectType>");
-                Console.WriteLine($"  projectType: {string.Join(", ", Enum.GetNames<ProjectType>())}");
-                Console.WriteLine(@"  e.g. eWolfCloneAndPack E:\Personal PersonalData Data");
-                return 1;
-            }
-
-            var cloneFolder = new CloneFolder(args[0], args[1], projectType);
-            if (!Directory.Exists(cloneFolder.From))
-            {
-                Console.WriteLine($"Folder not found: {cloneFolder.From}");
-                return 1;
-            }
-
-            Console.WriteLine("--Cloning Started--");
-            cloneFolder.Clone();
             return 0;
         }
     }
