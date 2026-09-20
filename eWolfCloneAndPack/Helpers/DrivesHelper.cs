@@ -37,6 +37,16 @@ namespace eWolfCloneAndPack.Helpers
             }
         }
 
+        internal static void TrimBackUps(CloneFolder cloneFolder)
+        {
+            List<string> drivesLetters = GetUsableDrives();
+
+            foreach (var letter in drivesLetters)
+            {
+                ZipHelper.TrimBackUpDriveZips(cloneFolder, letter);
+            }
+        }
+
         internal static void GetDrives()
         {
             DriveInfo[] drives = DriveInfo.GetDrives();

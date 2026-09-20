@@ -55,6 +55,7 @@ namespace eWolfCloneAndPack.Clone
             {
                 ZipHelper.CreateZip(this);
                 ZipHelper.RemoveZipDups(this);
+                DrivesHelper.TrimBackUps(this);
                 DrivesHelper.CopyBackUps(this);
             }
         }

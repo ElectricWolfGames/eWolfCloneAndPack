@@ -1,4 +1,5 @@
-﻿using eWolfCloneAndPack.Clone;
+﻿using eWolfCloneAndPack.Actions;
+using eWolfCloneAndPack.Clone;
 using eWolfCloneAndPack.Configuration;
 using System.IO.Compression;
 
@@ -20,6 +21,18 @@ namespace eWolfCloneAndPack.Helpers
                 if (!File.Exists(dest + name))
                     File.Copy(fileName, dest + name);
             }
+        }
+
+        // Run after CopyZips: keeps only the latest zip for each month on the backup drive
+        // (across all year folders for this project) so it doesn't fill up with daily copies.
+        internal static void TrimBackUpDriveZips(CloneFolder cloneFolderDetails, string driveLetter)
+        {
+            string projectFolder = GetOtherDriveProjectFolder(cloneFolderDetails, driveLetter);
+            if (!Directory.Exists(projectFolder))
+                return;
+
+            string[] files = Directory.GetFiles(projectFolder, $"*{cloneFolderDetails.Name}*.zip", SearchOption.AllDirectories);
+            RemoveAllButLatestPerMonthByName(files);
         }
 
         internal static void CreateZip(CloneFolder cloneFolderDetails)
@@ -91,7 +104,12 @@ namespace eWolfCloneAndPack.Helpers
 
         private static string GetOtherDriveFolder(CloneFolder cloneFolderDetails, DateTime dt, string driveLetter)
         {
-            return @$"{driveLetter}\_BackUpZips\{cloneFolderDetails.ProjectType}\{cloneFolderDetails.Name}\{dt.Year}\";
+            return @$"{GetOtherDriveProjectFolder(cloneFolderDetails, driveLetter)}{dt.Year}\";
+        }
+
+        private static string GetOtherDriveProjectFolder(CloneFolder cloneFolderDetails, string driveLetter)
+        {
+            return @$"{driveLetter}\_BackUpZips\{cloneFolderDetails.ProjectType}\{cloneFolderDetails.Name}\";
         }
 
         private static void RemoveAllButLatest(List<string> files)
@@ -133,6 +151,38 @@ namespace eWolfCloneAndPack.Helpers
                 {
                     Console.WriteLine($"Removing {ordered[i]} as it is not the latest zip for {monthGroup.Key:yyyy-MM}");
                     File.Delete(ordered[i]);
+                }
+            }
+        }
+
+        // Groups zips by the yyyy-MM-dd date at the start of the file name (FileDetailsModels falls
+        // back to last write time if the name doesn't start with a date), keeps the newest in each
+        // month and deletes the rest. Same-day backups are named "yyyy-MM-dd Name.zip",
+        // "yyyy-MM-dd.1 Name.zip", "yyyy-MM-dd.2 Name.zip"... so ordinal name order picks the latest.
+        private static void RemoveAllButLatestPerMonthByName(string[] files)
+        {
+            var filesByMonth = files
+                .Select(file => new FileDetailsModels(file))
+                .GroupBy(file => new DateTime(file.DateTime.Year, file.DateTime.Month, 1));
+
+            foreach (var monthGroup in filesByMonth)
+            {
+                var ordered = monthGroup
+                    .OrderByDescending(file => file.DateTime)
+                    .ThenByDescending(file => file.Name, StringComparer.Ordinal)
+                    .ToList();
+
+                foreach (var extra in ordered.Skip(1))
+                {
+                    Console.WriteLine($"Removing {extra.FullPath} as it is not the latest zip for {monthGroup.Key:yyyy-MM}");
+                    try
+                    {
+                        File.Delete(extra.FullPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"  Could not remove {extra.FullPath}: {ex.Message}");
+                    }
                 }
             }
         }
